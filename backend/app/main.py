@@ -1,28 +1,11 @@
 from fastapi import FastAPI
 
 from app.database import engine
-from app.models import Base, Dataset
-from app.schemas import DatasetCreate
-from app.database import SessionLocal
+from app.models import Base
+from app.routers.datasets import router as datasets_router
 
 app = FastAPI()
 
-@app.post("/datasets")
-def create_dataset(dataset: DatasetCreate):
-
-    db = SessionLocal()
-
-    new_dataset = Dataset(
-        name=dataset.name,
-        rows=dataset.rows
-    )
-
-    db.add(new_dataset)
-
-    db.commit()
-
-    db.refresh(new_dataset)
-
-    return new_dataset
+app.include_router(datasets_router)
 
 Base.metadata.create_all(bind=engine)

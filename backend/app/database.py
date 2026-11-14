@@ -16,6 +16,10 @@ DATABASE_URL = (
     f"{os.getenv('POSTGRES_DB')}"
 )
 
+print("POSTGRES_USER =", os.getenv("POSTGRES_USER"))
+print("POSTGRES_DB =", os.getenv("POSTGRES_DB"))
+print("DB_HOST =", os.getenv("DB_HOST"))
+
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(

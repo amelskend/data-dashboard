@@ -4,6 +4,7 @@ anyio==4.16.0
 click==8.5.1
 fastapi==0.162.5
 h11==0.16.0
+httpx2==2.16.0
 idna==3.20
 opentelemetry-api==1.45.2
 psycopg[binary]==3.3.9

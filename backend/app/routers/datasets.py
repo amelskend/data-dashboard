@@ -1,16 +1,17 @@
 # routers/datasets.py
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
 
 from app.models import Dataset
 from app.schemas import DatasetCreate
-from app.database import SessionLocal
+from app.database import get_db
 
 router = APIRouter()
 
 @router.post("/datasets")
 def create_dataset(dataset: DatasetCreate):
 
-    db = SessionLocal()
+    db: Session = Depends(get_db)
 
     new_dataset = Dataset(
         name=dataset.name,
@@ -28,7 +29,7 @@ def create_dataset(dataset: DatasetCreate):
 @router.get("/datasets")
 def get_datasets():
 
-    db = SessionLocal()
+    db: Session = Depends(get_db)
 
     datasets = db.query(Dataset).all()
 
@@ -37,7 +38,7 @@ def get_datasets():
 @router.get("/datasets/{dataset_id}")
 def get_dataset(dataset_id: int):
 
-    db = SessionLocal()
+    db: Session = Depends(get_db)
 
     dataset = (
         db.query(Dataset)
@@ -56,7 +57,7 @@ def get_dataset(dataset_id: int):
 @router.delete("/datasets/{dataset_id}")
 def delete_dataset(dataset_id: int):
 
-    db = SessionLocal()
+    db: Session = Depends(get_db)
 
     dataset = (
         db.query(Dataset)

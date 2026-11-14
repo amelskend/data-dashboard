@@ -9,9 +9,10 @@ from app.database import get_db
 router = APIRouter()
 
 @router.post("/datasets")
-def create_dataset(dataset: DatasetCreate):
-
+def create_dataset(
+    dataset: DatasetCreate,
     db: Session = Depends(get_db)
+):
 
     new_dataset = Dataset(
         name=dataset.name,
@@ -27,18 +28,17 @@ def create_dataset(dataset: DatasetCreate):
     return new_dataset
 
 @router.get("/datasets")
-def get_datasets():
-
-    db: Session = Depends(get_db)
+def get_datasets(db: Session = Depends(get_db)):
 
     datasets = db.query(Dataset).all()
 
     return datasets
 
 @router.get("/datasets/{dataset_id}")
-def get_dataset(dataset_id: int):
-
+def get_dataset(
+    dataset_id: int,
     db: Session = Depends(get_db)
+):
 
     dataset = (
         db.query(Dataset)
@@ -55,9 +55,10 @@ def get_dataset(dataset_id: int):
     return dataset
 
 @router.delete("/datasets/{dataset_id}")
-def delete_dataset(dataset_id: int):
-
+def delete_dataset(
+    dataset_id: int,
     db: Session = Depends(get_db)
+):
 
     dataset = (
         db.query(Dataset)

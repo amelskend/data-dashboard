@@ -12,7 +12,7 @@ DATABASE_URL = (
     f"postgresql://"
     f"{os.getenv('POSTGRES_USER')}:"
     f"{os.getenv('POSTGRES_PASSWORD')}@"
-    f"postgres:5432/"
+    f"{os.getenv("DB_HOST")}:5432/"
     f"{os.getenv('POSTGRES_DB')}"
 )
 
@@ -32,5 +32,5 @@ def get_db():
 
     finally:
         db.close()
-        
+
 Base = declarative_base()

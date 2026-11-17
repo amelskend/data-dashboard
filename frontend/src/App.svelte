@@ -5,6 +5,7 @@
 	let name = "";
 	let rows = 0;
 	let uploadResult = null;
+	let selectedFile;
 
 	async function loadDatasets() {
 
@@ -51,6 +52,7 @@
 	  await loadDatasets();
   }
 	loadDatasets();
+
   async function uploadCsv(event) {
 
     const formData = new FormData();
@@ -71,6 +73,7 @@
     const result = await response.json();
     console.log(result);
 	uploadResult = result;
+	await loadDatasets();
   }
 
 </script>

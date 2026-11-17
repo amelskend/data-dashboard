@@ -36,6 +36,20 @@ Full-stack application designed to manage and visualize infrastructure assets.
 ### Storage
 - S3-compatible storage (MinIO)
 
+## Local development with Docker
+
+Create a `.env` file at the project root with the PostgreSQL and MinIO
+credentials, then start the services:
+
+```bash
+docker compose up --build
+```
+
+MinIO is available at `http://localhost:9001`. The `minio-init` service creates
+the `datasets` bucket before the backend starts. The backend uses
+`http://minio:9000` internally; `localhost:9000` is only for tools running on
+the host machine.
+
 ## Architecture
 
 Frontend (Svelte)

@@ -4,6 +4,7 @@
 
 	let name = "";
 	let rows = 0;
+	let uploadResult = null;
 
 	async function loadDatasets() {
 
@@ -50,6 +51,27 @@
 	  await loadDatasets();
   }
 	loadDatasets();
+  async function uploadCsv(event) {
+
+    const formData = new FormData();
+
+    formData.append(
+        "file",
+        event.target.files[0]
+    );
+
+    const response = await fetch(
+      "http://localhost:8000/upload",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const result = await response.json();
+    console.log(result);
+	uploadResult = result;
+  }
 
 </script>
 
@@ -91,16 +113,29 @@
  Add Dataset
 </button>
 
-<input
-  type="file"
-/>
+<div class="flex items-center gap-2">
+  <label for="csv-file" class="btn btn-secondary">
+    Upload CSV
+  </label>
+  <input
+    id="csv-file"
+    class="hidden"
+    type="file"
+    accept=".csv"
+    on:change={uploadCsv}
+  />
+</div>
 
+{#if uploadResult}
 
-<button
-  class="btn btn-primary"
-  on:click={UploadCSV}
-  
->
-  Upload CSV
-</button>
+<div class="alert alert-success">
 
+ Rows: {uploadResult.rows}
+
+ Columns:
+
+ {uploadResult.columns.join(", ")}
+
+</div>
+
+{/if}

@@ -91,7 +91,16 @@
  Add Dataset
 </button>
 
+<input
+  type="file"
+/>
 
 
-
+<button
+  class="btn btn-primary"
+  on:click={UploadCSV}
+  
+>
+  Upload CSV
+</button>
 

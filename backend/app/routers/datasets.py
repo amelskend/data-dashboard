@@ -1,10 +1,12 @@
 # routers/datasets.py
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, UploadFile
 from sqlalchemy.orm import Session
 
 from app.models import Dataset
 from app.schemas import DatasetCreate
 from app.database import get_db
+
+import pandas as pd
 
 router = APIRouter()
 
@@ -78,4 +80,14 @@ def delete_dataset(
 
     return {
         "message": "Dataset deleted"
+    }
+
+@router.post("/upload")
+async def upload_csv(file: UploadFile):
+
+    df = pd.read_csv(file.file)
+
+    return {
+        "rows": len(df),
+        "columns": list(df.columns)
     }

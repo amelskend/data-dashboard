@@ -25,5 +25,9 @@ services:
       - postgres
     volumes:
       - ./backend:/app
+    develop:
+      watch:
+        - action: rebuild
+          path: ./backend/requirements.txt
 volumes:
   postgres_data:

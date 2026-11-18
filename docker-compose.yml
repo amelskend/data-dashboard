@@ -33,6 +33,23 @@ services:
         - action: rebuild
           path: ./backend/requirements.txt
 
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src
+          target: /app/src
+        - action: rebuild
+          path: ./frontend/package.json
+
   minio:
     image: rustfs/rustfs:latest
     command: /data
